@@ -1,98 +1,205 @@
-let sprite;
-let sprite2;
-let sprite3;
-let startingPosX = [random(1, width), random(1, width), random(1, width)];
-let startingPosY = [random(1, height), random(1, height), random(1, height)];
-function preload() {
- 
- 
-  sprite = new Sprite(200,200, 80, 80);
-  sprite.spriteSheet = 'assets/SpelunkyPurple.png';
-  sprite2 = new Sprite(350,350, 100, 100);
-  sprite2.spriteSheet = 'assets/SpelunkyClassicGuy.png';
-  sprite3 = new Sprite(150, 150, 80, 80);
-  sprite3.spriteSheet = 'assets/SpelunkyNinja.png';
-  
-  
-  let animations = {
-     stand: { row: 0, frames: 1},
-     walkRight: {row: 0, col: 1, frames: 8},
-     walkUp: {row: 5, frames: 6},
-     walkDown: {row: 5, col: 6, frames: 6}
+let bug, allBugs, rotationAngles = [0, 90, 180, 270],
+score, gameTime, gameState, timeLeft; 
 
-  };
-  sprite.anis.frameDelay = 8;
-  sprite.addAnis(animations);
-  sprite.changeAni('stand');
-  sprite2.anis.frameDelay = 8;
-  sprite2.addAnis(animations);
-  sprite2.changeAni('stand');
-  sprite3.anis.frameDelay = 8;
-  sprite3.addAnis(animations);
-  sprite3.changeAni('stand');
+
+function preload() {
+  
+  spritesheet = loadSpriteSheet('assets/BugSprite.png');
+
+  let animations = {
+
+  aliveUp: {row: 0, frames: 2},
+  aliveLeft: {row: 1, frames: 2},
+  aliveRight: {row: 2, frames: 2},
+  aliveDown: {row: 0, frames: 2},
+  deadUp: {row:0, col: 2, frames: 1},
+  deadLeft: {row:1, col: 2, frames: 1},
+  deadRight: {row:2, col: 2, frames: 1},
+  deadDown: {row:3, col: 2, frames: 1},
+    }
+  class Bug {
+    constructor(spritesheet, animations) {
+      bug = new Sprite(random(50, 750), random(50, 750), 50, 50);
+      this.bug.spriteSheet = spritesheet;
+      bug.addAni('alive', 'assets/BugSprite.png', 13);
+      this.bug.addAnis(animations);
+      bug.anis.frameDelay = 5;
+      bug.rotation = random(rotationAngles);
+      switch(bug.rotation){
+        case 0:
+          bugUp();
+          break;
+        case 90:
+          bugRight();
+          break;
+        case 180:
+          bugDown();
+          break;
+        case 270:
+          bugLeft();
+          break;
+        default:
+          bug.rotation = 0;
+          bugUp();
+          break;
+      }
+
+      function bugRight() {
+        bug.changeAni('aliveRight');
+        bug.vel.x = 1;
+        bug.vel.y = 0;
+      }
+
+      function bugLeft() {
+        bug.changeAni('aliveLeft');
+        bug.vel.x = -1;
+        bug.vel.y = 0;
+      }
+
+      function bugUp() {
+        bug.changeAni('aliveUp');
+        bug.vel.x = 0;
+        bug.vel.y = 1;
+      }
+
+      function bugDown() {
+        bug.changeAni('aliveDown');
+        bug.vel.x = 0;
+        bug.vel.y = -1;
+      }
+
+
+
+    }}
+  
+  if (allBugs.size() < 1) {
+    bugSpawner(20);
+  }
+
 }
 
 function setup() {
-  createCanvas(400, 400);
-  
+  createCanvas(600, 600);
+  allBugs = new Group();
+  score = 0;
+  gameTime = 30;
+  gameState = "start";
+  timeLeft = true;
+
 }
 
 function draw() {
-  background(0);
+  background(255);
+
+  if(gameState == "start") {
+    startGameNotif();
+    if(mouseIsPressed) {
+      bugSpawner(20);
+      playTime = millis(); 
+      gameState = "play";
+      } else if(gameState == "play") {
+       timer();
+       push();
+       textSize(15);
+       text(`Time remaining: ${gameTime} seconds`, 100, 100);
+       text(`Bugs clicked: ${score}`, 100, 200);
+       pop();
+       allBugs.overlap(allBugs);
+
+       if(bug.ani = 'aliveUp' && bug.mouse.pressing()) {
+        bug.changeAni('deadUp')
+        bug.vel.x = 0;
+        bug.vel.y = 0;
+        score++;
+        bug.remove();
+       }
+
+       if(bug.ani = 'aliveLeft' && bug.mouse.pressing()) {
+        bug.changeAni('deadLeft');
+        bug.vel.x = 0;
+        bug.vel.y = 0;
+        score++;
+        bug.remove();
+       }
+
+       if(bug.ani = 'aliveRight' && bug.mouse.pressing()) {
+        bug.changeAni('deadRight')
+        bug.vel.x = 0;
+        bug.vel.y = 0;
+        score++;
+        bug.remove();
+       }
+
+       if(bug.ani = 'aliveDown' && bug.mouse.pressing()) {
+        bug.changeAni('deadDown')
+        bug.vel.x = 0;
+        bug.vel.y = 0;
+        score++;
+        bug.remove();
+       }
+
+       if(score++) {
+        bug.speed = bug.speed + 0.5;
+      }
+  }
+
+  if(timeLeft = false) {
+    allBugs.remove();
+    gameState = "end";
+  }
+  else if(gameState == 'end') {
+    endGameNotif();
+  }
   
-  if (kb.pressing ('d')) {
-    walkRight();
-  } else if(kb.pressing ('a')) {
-    walkLeft();
-  } else if(kb.pressing ('w')) {
-    walkUp();
-  } else if(kb.pressing ('s')) {
-    walkDown();
-  } else {
+}
 
-    stop();
+function startGameNotif() {
+  push();
+  fill('cyan');
+  stroke(0);
+  strokeWeight(5);
+  rect(width/4, height/4, 250, 250);
+  noStroke();
+  fill(0);
+  textAlign(CENTER);
+  textSize(20);
+  text(`Welcome to the bug squish game!\nUse your mouse or trackpad to click on the bugs.\n
+  You have 30 seconds to click on as many bugs as you can.\n Good luck!`, width/3, width3);
+  pop();
+}
+
+function endGameNotif() {
+  push();
+  fill('cyan');
+  stroke(0);
+  strokeWeight(5);
+  rect(width/4, height/4, 400, 400);
+  noStroke();
+  fill(0);
+  textAlign(CENTER);
+  textSize(20);
+  text(`Time is up! Your score is: ${score}!`, width/3, width3);
+  pop();
+}
+
+function timer() {
+  gameTime = 30 - int((millis() - playTime) / 1000);
+  if(gameTime > 30) {
+    timeLeft = true;
   }
-  if(sprite.x + sprite.x/4 > width) {
-    sprite.vel.x = -1;
-    sprite.scale.x = -1;
-  } else if (sprite.x - sprite.x/4 < 0) {
-    sprite.vel.x = 1;
-    sprite.scale.x = 1;
+  else if(gameTime > 0) {
+    timeLeft = true;
+  }
+  else if(gameTime = 0){
+    timeLeft = false;
   }
 }
 
-function stop() {
-  sprite.changeAni('stand');
-  sprite.vel.x = 0;
-  sprite.vel.y = 0;
+function bugSpawner(num) {
+  for(i = 0; i < num; i++) {
+    newBug = new Bug('assets/BugSprite.png', animations);
+    allBugs.add(newBug);
+  }
 }
 
-function overlapIgnore() {}
-
-function walkRight() {
-  sprite.changeAni('walkRight');
-  sprite.vel.x = 1;
-  sprite.scale.x = 1;
-  sprite.vel.y = 0;
 }
-
-function walkLeft() {
-  sprite.changeAni('walkRight'); 
-  sprite.vel.x = -1;
-  sprite.scale.x = -1;
-  sprite.vel.y = 0;
-}
-
-function walkUp() {
-  sprite.changeAni('walkUp');
-  sprite.vel.y = -1;
-  sprite.vel.x = 0;
-}
-
-function walkDown() {
-  sprite.changeAni('walkDown');
-  sprite.vel.y = 1;
-  sprite.vel.x = 0;
-}
-
-
