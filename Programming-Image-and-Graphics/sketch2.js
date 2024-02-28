@@ -15,7 +15,8 @@ function preload() {
     deadDown: {row:2, col: 2, frames: 1},
       }
 
-    bugs.push(new Bug('assets/BugSpriteFinal.png', animations, 200, 200, 270, 360));
+    bugs.push(new Bug('assets/BugSpriteFinal.png', animations, 200, 200, 120, 120));
+    bugs.push(new Bug('assets/BugSpriteFinal.png', animations, 100, 100, 120, 120));
     }
   
 function setup() {
@@ -26,46 +27,47 @@ function draw() {
   background(220);
 
   bugs.forEach((bug) => {
-    if(this.bug.ani = 'aliveUp' && this.bug.mouse.pressing()) {
-      this.bug.changeAni('deadUp')
-      this.bug.vel.x = 0;
-      this.bug.vel.y = 0;
+    if(bug.ani = 'aliveUp' && bug.mouse.pressing()) {
+      bug.changeAni('deadUp')
+      bug.vel.x = 0;
+      bug.vel.y = 0;
       score++;
-      this.bug.remove();
+      bug.remove();
      }
 
-     if(this.bug.ani = 'aliveLeft' && this.bug.mouse.pressing()) {
-      this.bug.changeAni('deadLeft');
-      this.bug.vel.x = 0;
-      this.bug.vel.y = 0;
+     if(bug.ani = 'aliveLeft' && bug.mouse.pressing()) {
+      bug.changeAni('deadLeft');
+      bug.vel.x = 0;
+      bug.vel.y = 0;
       score++;
-      this.bug.remove();
+      bug.remove();
      }
 
-     if(this.bug.ani = 'aliveRight' && this.bug.mouse.pressing()) {
-      this.bug.changeAni('deadRight')
-      this.bug.vel.x = 0;
-      this.bug.vel.y = 0;
+     if(bug.ani = 'aliveRight' && bug.mouse.pressing()) {
+      bug.changeAni('deadRight')
+      bug.vel.x = 0;
+      bug.vel.y = 0;
       score++;
-      this.bug.remove();
+      bug.remove();
      }
 
-     if(this.bug.ani = 'aliveDown' && this.bug.mouse.pressing()) {
-      this.bug.changeAni('deadDown')
-      this.bug.vel.x = 0;
-      this.bug.vel.y = 0;
+     if(bug.ani = 'aliveDown' && bug.mouse.pressing()) {
+      bug.changeAni('deadDown')
+      bug.vel.x = 0;
+      bug.vel.y = 0;
       score++;
-      this.bug.remove();}
+      bug.remove();}
   })}
 
 
 class Bug {
-  constructor(spritesheet, animations, x, y, w, h) {
+  constructor(spritesheet, animations, x, y, w, h, speed) {
     this.bug = new Sprite(x, y, w, h);
     this.bug.spriteSheet = spritesheet;
     this.bug.addAnis(animations);
-    this.bug.anis.frameDelay = 5;
+    this.bug.anis.frameDelay = 3;
     this.bug.rotation = random(rotationAngles);
+    this.speed = speed;
     switch(bug.rotation){
       case 0:
         bugUp();
