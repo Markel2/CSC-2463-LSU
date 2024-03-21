@@ -1,9 +1,9 @@
  
 let soundFX = new Tone.Players ({
-  musicbox: "Programming-Sound/Sound-Effects/Old-Music-Box.mp3",
-  firework: "Programming-Sound/Sound-Effects/Firework.mp3", 
-  harp: "Programming-Sound/Sound-Effects/Harp.mp3", 
-  windowbreak: "Programming-Sound/Sound-Effects/Window-Break.mp3"}).toDestination();
+  musicbox: "https://markel2.github.io/CSC-2463-LSU/Programming-Sound/Sound-Effects/Old-Music-Box.mp3",
+  firework: "https://markel2.github.io/CSC-2463-LSU/Programming-Sound/Sound-Effects/Firework.mp3", 
+  harp: "https://markel2.github.io/CSC-2463-LSU/Programming-Sound/Sound-Effects/Harp.mp3", 
+  windowbreak: "https://markel2.github.io/CSC-2463-LSU/Programming-Sound/Sound-Effects/Window-Break.mp3"}).toDestination();
 
 let delAmt = new Tone.FeedbackDelay ("8n", 0.5);
 let distAmt = new Tone.Distortion (0.5); 
