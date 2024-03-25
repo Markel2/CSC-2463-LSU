@@ -11,16 +11,16 @@ fmSynth.modulationEnvelope = {
 }
 
 function preload(){
-  megaman = loadImage('assets/Megaman.png')
+  ocarinaoftime = loadImage('assets/Link_Ocarina_2.png')
 }
 
 function setup() {
-  createCanvas(1200, 700); 
+  createCanvas(515, 800); 
 }
 
 function draw() {
   if (mouseIsPressed === true){
-    background(megaman);
+    background(ocarinaoftime);
   } else if (mouseIsPressed === false){
     background (240);
     text ('press mouse', 150, height/3);
@@ -28,7 +28,7 @@ function draw() {
 }
 
 function mousePressed() { 
-  fmSynth.triggerAttackRelease("a7", 0.5);
+  fmSynth.triggerAttackRelease("c5", 0.5);
 }
 
 
