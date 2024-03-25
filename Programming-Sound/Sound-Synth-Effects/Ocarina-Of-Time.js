@@ -11,7 +11,7 @@ fmSynth.modulationEnvelope = {
 }
 
 function preload(){
-  ocarinaoftime = loadImage('assets/Link_Ocarina_2.png')
+  ocarinaoftime = loadImage('assets/LinkOcarina.png')
 }
 
 function setup() {
