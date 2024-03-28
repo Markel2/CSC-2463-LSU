@@ -1,9 +1,8 @@
 let sprite;
 let characters = [];
 
-function preload() {
 
-  let animations = {
+let animations = {
     stand: { row: 0, frames: 1},
     walkRight: {row: 0, col: 1, frames: 8},
     walkUp: {row: 5, frames: 6},
@@ -15,7 +14,7 @@ function preload() {
  characters.push(new Character('assets/SpelunkyNinja.png', animations, 200, 200, 80, 80));
  characters.push(new Character('assets/SpelunkyJungleWarrior.png', animations, 300, 300, 80, 80));
 
-}
+
 function setup() {
   createCanvas(400, 400);
   
