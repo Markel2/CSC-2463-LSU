@@ -10,9 +10,9 @@ let animations = {
 
  };
   
- characters.push(new Character('assets/SpelunkyPurple.png', animations, 100, 100, 80, 80));
- characters.push(new Character('assets/SpelunkyNinja.png', animations, 200, 200, 80, 80));
- characters.push(new Character('assets/SpelunkyJungleWarrior.png', animations, 300, 300, 80, 80));
+ characters.push(new Character('https://markel2.github.io/CSC-2463-LSU/assets/SpelunkyPurple.png', animations, 100, 100, 80, 80));
+ characters.push(new Character('https://markel2.github.io/CSC-2463-LSU/assets/SpelunkyNinja.png', animations, 200, 200, 80, 80));
+ characters.push(new Character('https://markel2.github.io/CSC-2463-LSU/assets/SpelunkyJungleWarrior.png', animations, 300, 300, 80, 80));
 
 
 function setup() {
