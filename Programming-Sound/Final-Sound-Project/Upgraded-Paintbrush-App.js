@@ -5,7 +5,7 @@ function preload() {
   backgroundmusic =  new Tone.Player("https://markel2.github.io/CSC-2463-LSU/Programming-Sound/Sound-Effects/relaxingmusic.mp3").toDestination();
   paintbrush = new Tone.Player("https://markel2.github.io/CSC-2463-LSU/Programming-Sound/Sound-Effects/Paintbrush.mp3").toDestination();
   backgroundmusic.loop = true;
-  backgroundmusic.playbackRate = 200;
+  backgroundmusic.playbackRate = 2;
   paintbrush.loop = true;
   paintbrush.playbackRate = 1;
   paintbrush.reverse = true; 
